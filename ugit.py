@@ -13,6 +13,7 @@ import binascii
 import machine
 import time
 import network
+import random
 
 global internal_tree
 
@@ -40,11 +41,11 @@ ignore = ignore_files
 # GitHub uses 'main' instead of master for python repository trees
 giturl = 'https://github.com/{user}/{repository}'
 call_trees_url = f'https://api.github.com/repos/{user}/{repository}/git/trees/{default_branch}?recursive=1'
-raw = f'https://raw.githubusercontent.com/{user}/{repository}/master/'
+raw = f'https://raw.githubusercontent.com/{user}/{repository}/{default_branch}/'
 
 
 def pull(f_path, raw_url):
-    print(f'pulling {f_path} from github')
+    print(f'pulling {f_path} from github with url: {raw_url}')
     # files = os.listdir()
     headers = {'User-Agent': 'ugit-turfptax'}
     # ^^^ Github Requires user-agent header otherwise 403
@@ -90,10 +91,14 @@ def pull_all(tree=call_trees_url, raw=raw, ignore=ignore, isconnected=False):
             except:
                 log.append(f'{i["path"]} del failed from int mem')
                 print('failed to delete old file')
+                internal_tree = remove_item(i['path'], internal_tree)
             try:
-                pull(i['path'], raw + i['path'])
+                url = f"{raw}{i['path']}?token={random.randint(1,9999999)}"
+                print(url)
+                pull(i['path'], url) 
                 log.append(i['path'] + ' updated')
             except:
+                print(f"while pulling the file {i['path']} exception occurred")
                 log.append(i['path'] + ' failed to pull')
     # delete files not in Github tree
     if len(internal_tree) > 0:
@@ -247,6 +252,8 @@ def remove_ignore(internal_tree, ignore=ignore):
 
 
 def remove_item(item, tree):
+    
+    print(f"deleting file:{item} from the tree:{tree}")
     culled = []
     for i in tree:
         if item not in i:
@@ -271,4 +278,5 @@ def backup():
     backup = open('ugit.backup', 'w')
     backup.write(backup_text)
     backup.close()
+
 

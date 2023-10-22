@@ -21,7 +21,7 @@ motor = Motor(BIN2, BIN1, STBY, AIN1, AIN2, PWMA, PWMB, ofsetA, ofsetB)
 
 print("this is bot id 21")
 
-print("Initial commit - not moving at all")
+print("Second commit - not moving at all")
 # motor.right(800)
 # sleep(60)
 
@@ -74,14 +74,15 @@ print("Initial commit - not moving at all")
 # motor.left(800)
 # sleep(10)
 
-motor.brake()
-sleep(5)
+# motor.brake()
+# sleep(5)
 
-motor.stop()
-sleep(5)
+# motor.stop()
+# sleep(5)
 
 motor.standby()
 sleep(5)
 
-motor.run()
-sleep(5)
+print("Finished the execution. Coming out of the loop. Restart to start the loop again.")
+# motor.run()
+# sleep(5)
