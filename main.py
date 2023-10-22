@@ -21,6 +21,7 @@ motor = Motor(BIN2, BIN1, STBY, AIN1, AIN2, PWMA, PWMB, ofsetA, ofsetB)
 
 
 print("not moving at all")
+print("just adding one more statement")
 # motor.right(800)
 # sleep(60)
 
