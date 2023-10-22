@@ -28,7 +28,7 @@ user = 'arunmbalaji'
 repository = 'smart-traffic'
 token = ''
 # Change this variable to 'master' or any other name matching your default branch
-default_branch = 'main'
+default_branch = 'bot-id21'
 
 # Don't remove ugit.py from the ignore_files unless you know what you are doing :D
 # Put the files you don't want deleted or updated here use '/filename.ext'
@@ -120,15 +120,17 @@ def wificonnect(ssid=ssid, password=password):
     wlan.active(False)
     wlan.active(True)
     wlan.connect(ssid, password)
-    wifi_not_connected = False
+    wifi_not_connected = True
     i=1
     while not wlan.isconnected():
         time.sleep(1)
+        print(f"wifi connect attempt no : {i}")
         i = i+1
-        if i > 6:
+        if i > 15:
             wifi_not_connected = False
             break
         pass
+
     if not wifi_not_connected:
         print("Unable to connect to wifi. Continue executing the existing code")
         return None
@@ -269,3 +271,4 @@ def backup():
     backup = open('ugit.backup', 'w')
     backup.write(backup_text)
     backup.close()
+

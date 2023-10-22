@@ -19,8 +19,9 @@ ofsetB = 1
 
 motor = Motor(BIN2, BIN1, STBY, AIN1, AIN2, PWMA, PWMB, ofsetA, ofsetB)
 
+print("this is bot id 21")
 
-print("not moving at all")
+print("Initial commit - not moving at all")
 # motor.right(800)
 # sleep(60)
 
