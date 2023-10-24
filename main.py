@@ -22,26 +22,26 @@ motor = Motor(BIN2, BIN1, STBY, AIN1, AIN2, PWMA, PWMB, ofsetA, ofsetB)
 print("this is bot id 21")
 
 print("Second commit - not moving at all")
-# motor.right(800)
-# sleep(60)
+motor.right(800)
+sleep(60)
 
-# print("only only only moving forward")
-# motor.forward(500)
-# sleep(10)
+print("only only only moving forward")
+motor.forward(500)
+sleep(10)
 
-# print("moving backward")
-# motor.backward(500)
-# sleep(5)
-
-
-# print("moving right")
-# motor.right(500)
-# sleep(20)
+print("moving backward")
+motor.backward(500)
+sleep(5)
 
 
-# print("moving left")
-# motor.left(500)
-# sleep(20)
+print("moving right")
+motor.right(500)
+sleep(20)
+
+
+print("moving left")
+motor.left(500)
+sleep(20)
 
 
 # print("moving forward")
