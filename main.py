@@ -96,7 +96,7 @@ def motor_worker(pw):
   motor.standby()
   sleep(5)
 
-  print("Finished the execution. Coming out of the loop. Restart to start the loop again.")z
+  print("Finished the execution. Coming out of the loop. Restart to start the loop again.")
 
 @task
 def mqtt_worker(pw):
