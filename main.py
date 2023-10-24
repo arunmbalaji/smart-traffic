@@ -2,7 +2,7 @@
 from machine import Pin, PWM
 from time import sleep
 from TB6612FNG import Motor
-from worker import task, MT
+from worker_lite import task, MT
 import time
 import ujson
 from umqtt.simple import MQTTClient

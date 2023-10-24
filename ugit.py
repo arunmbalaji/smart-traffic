@@ -33,7 +33,18 @@ default_branch = 'bot-id21'
 
 # Don't remove ugit.py from the ignore_files unless you know what you are doing :D
 # Put the files you don't want deleted or updated here use '/filename.ext'
-ignore_files = ['ugit.py', 'boot.py', 'config.py', 'botid21-certificate.pem.crt', 'botid21-private.pem.key', 'AmazonRootCA1.pem', 'AmazonRootCA3.pem']
+ignore_files = ['ugit.py', 
+    'boot.py', 
+    'config.py', 
+    'botid21-certificate.pem.crt', 
+    'botid21-private.pem.key', 
+    'AmazonRootCA1.pem', 
+    'AmazonRootCA3.pem',
+    'umqtt.simple.py',
+    'pipe.py',
+    'worker_lite.py',
+    'TB6612FNG.py'
+    ]
 ignore = ignore_files
 ### -----------END OF USER VARIABLES ----------####
 
