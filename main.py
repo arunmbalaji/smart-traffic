@@ -2,7 +2,7 @@
 from machine import Pin, PWM
 from time import sleep
 from TB6612FNG import Motor
-from worker_lite import task, MT
+from worker import task, MT
 import time
 import ujson
 from umqtt.simple import MQTTClient
@@ -33,8 +33,9 @@ with open("" + config.THING_PRIVATE_KEY, 'r') as f:
 with open("" + config.THING_CLIENT_CERT, 'r') as f:
     cert = f.read()
 client_id = config.THING_ID
-topic_pub = "clients/" + client_id + "/sensor01"
-topic_sub = "clients/general"
+# topic_pub = "clients/" + client_id + "/sensor01"
+topic_sub = "botid/21"
+cmd = ""
 aws_endpoint = config.MQTT_HOST
 ssl_params = {"key":key, "cert":cert, "server_side":False}
 
@@ -74,55 +75,59 @@ def motor_worker(pw):
   # print("Second commit - not moving at all")
   # motor.right(800)
   # sleep(60)
+  c=yield
+  while True:
+    if cmd == "forward":
+        print("only only only moving forward")
+        motor.forward(500)
+        yield
+    elif cmd == "backward":
+        print("moving backward")
+        motor.backward(500)
+        yield
+    elif cmd == "right":
+        print("moving right")
+        motor.right(500)
+        yield
+    elif cmd == "left":
+        print("moving left")
+        motor.left(500)
+        yield
+    else:
+        yield
+    # motor.standby()
+    # sleep(5)
 
-  print("only only only moving forward")
-  motor.forward(500)
-  sleep(10)
-
-  print("moving backward")
-  motor.backward(500)
-  sleep(5)
-
-
-  print("moving right")
-  motor.right(500)
-  sleep(20)
-
-
-  print("moving left")
-  motor.left(500)
-  sleep(20)
-
-  motor.standby()
-  sleep(5)
-
-  print("Finished the execution. Coming out of the loop. Restart to start the loop again.")
+    # print("Finished the execution. Coming out of the loop. Restart to start the loop again.")
+    # yield
 
 @task
 def mqtt_worker(pw):
   mqtt = mqtt_connect()
   mqtt.set_callback(mqtt_subscribe)
   mqtt.subscribe(topic_sub)
+  c=yield
   try:
-      mqtt.check_msg()
-      # sensor.measure()
-      temp = random.random()
-      hum = random.random()
-      msg = ujson.dumps({
-          "client": client_id,
-          "device": {
-              "uptime": time.ticks_ms(),
-              "hardware": info[0],
-              "firmware": info[2]
-          },
-          "sensors": {
-              "temperature": temp,
-              "humidity": hum,
-          },
-          "status": "online",
-      })
-      mqtt_publish(client=mqtt, message=msg)
-      time.sleep(2)
+    #   mqtt.check_msg()
+    #   # sensor.measure()
+    #   temp = random.random()
+    #   hum = random.random()
+    #   msg = ujson.dumps({
+    #       "client": client_id,
+    #       "device": {
+    #           "uptime": time.ticks_ms(),
+    #           "hardware": info[0],
+    #           "firmware": info[2]
+    #       },
+    #       "sensors": {
+    #           "temperature": temp,
+    #           "humidity": hum,
+    #       },
+    #       "status": "online",
+    #   })
+    #   mqtt_publish(client=mqtt, message=msg)
+    #   time.sleep(2)
+      yield
   except OSError as e:
       print("RECONNECT TO MQTT BROKER")
       mqtt = mqtt_connect()
