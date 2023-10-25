@@ -34,6 +34,21 @@ class Motor():
         else:
             self.bofset = False
 
+    def forward_with_angle(self, speed, angle): # angle values are between -1 to 1
+        
+        if angle < 0:
+            # nudge left
+            ams = min(1, angle+1) * speed
+            bms = speed
+            self.left_with_diff_speed(ams, bms) # reduce a motor speed
+        elif angle > 0:
+            # nudge right
+            ams = speed
+            bms = min(1, angle+1) * speed
+            self.right_with_diff_speed(ams, bms) # reduce b motor speed
+        else:
+            self.forward(speed)
+
     def forward(self, speed):
 
         if self.aofset:
@@ -72,6 +87,25 @@ class Motor():
         self.apwm.duty(speed)
         self.bpwm.duty(speed)
 
+    def right_with_diff_speed(self, aspeed, bspeed):
+
+        if self.aofset:
+            self.ain1.value(1)
+            self.ain2.value(0)
+        else:
+            self.ain1.value(0)
+            self.ain2.value(1)
+
+        if self.bofset:
+            self.bin1.value(0)
+            self.bin2.value(1)
+        else:
+            self.bin1.value(1)
+            self.bin2.value(0)
+
+        self.apwm.duty(aspeed)
+        self.bpwm.duty(bspeed)
+
     def right(self, speed):
 
         if self.aofset:
@@ -90,6 +124,25 @@ class Motor():
 
         self.apwm.duty(speed)
         self.bpwm.duty(speed)
+    
+    def left_with_diff_speed(self, aspeed, bspeed):
+
+        if self.aofset:
+            self.ain1.value(0)
+            self.ain2.value(1)
+        else:
+            self.ain1.value(1)
+            self.ain2.value(0)
+
+        if self.bofset:
+            self.bin1.value(1)
+            self.bin2.value(0)
+        else:
+            self.bin1.value(0)
+            self.bin2.value(1)
+
+        self.apwm.duty(aspeed)
+        self.bpwm.duty(bspeed)
 
     def left(self, speed):
 
