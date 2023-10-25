@@ -95,10 +95,11 @@ def pull_all(tree=call_trees_url, raw=raw, ignore=ignore, isconnected=False):
             try:
                 url = f"{raw}{i['path']}?token={random.randint(1,9999999)}"
                 print(url)
-                pull(i['path'], url) 
+                pull(i['path'], url)
                 log.append(i['path'] + ' updated')
-            except:
-                print(f"while pulling the file {i['path']} exception occurred")
+            except Exception as e:
+                print(
+                    f"while pulling the file {i['path']} exception occurred. The exception is:{e}")
                 log.append(i['path'] + ' failed to pull')
     # delete files not in Github tree
     if len(internal_tree) > 0:
@@ -126,7 +127,7 @@ def wificonnect(ssid=ssid, password=password):
     wlan.active(True)
     wlan.connect(ssid, password)
     wifi_not_connected = True
-    i=1
+    i = 1
     while not wlan.isconnected():
         time.sleep(1)
         print(f"wifi connect attempt no : {i}")
@@ -252,7 +253,7 @@ def remove_ignore(internal_tree, ignore=ignore):
 
 
 def remove_item(item, tree):
-    
+
     print(f"deleting file:{item} from the tree:{tree}")
     culled = []
     for i in tree:
@@ -278,5 +279,3 @@ def backup():
     backup = open('ugit.backup', 'w')
     backup.write(backup_text)
     backup.close()
-
-
