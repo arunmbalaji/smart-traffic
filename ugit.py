@@ -29,15 +29,15 @@ user = 'arunmbalaji'
 repository = 'smart-traffic'
 token = ''
 # Change this variable to 'master' or any other name matching your default branch
-default_branch = 'bot-id21'
+default_branch = 'car04'
 
 # Don't remove ugit.py from the ignore_files unless you know what you are doing :D
 # Put the files you don't want deleted or updated here use '/filename.ext'
 ignore_files = ['ugit.py', 
     'boot.py', 
     'config.py', 
-    'botid21-certificate.pem.crt', 
-    'botid21-private.pem.key',
+    'car04-certificate.pem.crt', 
+    'car04-private.pem.key',
     'umqtt.simple.py',
     'pipe.py',
     'worker.py'
