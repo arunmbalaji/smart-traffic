@@ -37,13 +37,10 @@ ignore_files = ['ugit.py',
     'boot.py', 
     'config.py', 
     'botid21-certificate.pem.crt', 
-    'botid21-private.pem.key', 
-    'AmazonRootCA1.pem', 
-    'AmazonRootCA3.pem',
+    'botid21-private.pem.key',
     'umqtt.simple.py',
     'pipe.py',
-    'worker_lite.py',
-    'TB6612FNG.py'
+    'worker.py'
     ]
 ignore = ignore_files
 ### -----------END OF USER VARIABLES ----------####
