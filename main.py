@@ -70,10 +70,14 @@ def mqtt_subscribe(topic, message):
     # c = yield
     # v = c.v
     cmd = jsonmsg['command']
+    if jsonmsg['angle'] is None:
+        angle = 0
+    else:
+        angle = jsonmsg['angle']
     print(cmd)
     if cmd == "FWD":
         print("moving forward")
-        motor.forward(config.BOT_SPEED)
+        motor.forward_with_angle(config.BOT_SPEED, angle)
     elif cmd == "BWD":
         print("moving backward")
         motor.backward(config.BOT_SPEED)
@@ -190,6 +194,7 @@ sleep(1)
 motor.backward(500)
 sleep(1)
 motor.standby()
+motor.run()
 while True:
     try:
         mqtt.check_msg()
