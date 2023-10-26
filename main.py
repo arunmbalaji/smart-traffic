@@ -61,13 +61,6 @@ def mqtt_connect(client=client_id, endpoint=aws_endpoint, sslp=ssl_params):
         machine.reset()
     return mqtt
 
-# def mqtt_publish(client, topic=topic_pub, message='{"message": "esp32"}'):
-#     client.publish(topic, message)
-#     # pub_led.value(1)
-#     time.sleep(.1)
-#     # pub_led.value(0)
-#     print("PUBLISHING MESSAGE: {} TO TOPIC: {}".format(message, topic))
-
 def reset_all_lights():
     zone1_red.value(0)
     zone2_red.value(0)
@@ -83,10 +76,10 @@ def mqtt_subscribe(topic, message):
     jsonmsg = ujson.loads(message)
     print (jsonmsg)
     cmd = jsonmsg['command']
-    if jsonmsg['angle'] is None:
-        angle = 0
-    else:
+    if angle in jsonmsg:
         angle = jsonmsg['angle']
+    else:
+        angle = 0
     print(cmd)
     if cmd == "FWD":
         print("moving forward")
@@ -105,22 +98,22 @@ def mqtt_subscribe(topic, message):
         motor.stop()
     elif cmd == "LIGHTS":
         print("controlling lights")
-        if jsonmsg['payload'] is not None:
-            if jsonmsg['payload']['ZONE1_RED'] is not None:
+        if "payload" in jsonmsg:
+            if "ZONE1_RED" in jsonmsg['payload']:
                 zone1_red.value(jsonmsg['payload']['ZONE1_RED'])
-            if jsonmsg['payload']['ZONE2_RED'] is not None:
+            if "ZONE2_RED" in jsonmsg['payload']:
                 zone2_red.value(jsonmsg['payload']['ZONE2_RED'])
-            if jsonmsg['payload']['ZONE3_RED'] is not None:
+            if "ZONE3_RED" in jsonmsg['payload']:
                 zone3_red.value(jsonmsg['payload']['ZONE3_RED'])
-            if jsonmsg['payload']['ZONE4_RED'] is not None:
+            if "ZONE4_RED" in jsonmsg['payload']:
                 zone4_red.value(jsonmsg['payload']['ZONE4_RED'])
-            if jsonmsg['payload']['ZONE1_GREEN'] is not None:
+            if "ZONE1_GREEN" in jsonmsg['payload']:
                 zone1_green.value(jsonmsg['payload']['ZONE1_GREEN'])
-            if jsonmsg['payload']['ZONE2_GREEN'] is not None:
+            if "ZONE2_GREEN" in jsonmsg['payload']:
                 zone2_green.value(jsonmsg['payload']['ZONE2_GREEN'])
-            if jsonmsg['payload']['ZONE3_GREEN'] is not None:
+            if "ZONE3_GREEN" in jsonmsg['payload']:
                 zone3_green.value(jsonmsg['payload']['ZONE3_GREEN'])
-            if jsonmsg['payload']['ZONE4_GREEN'] is not None:
+            if "ZONE4_GREEN" in jsonmsg['payload']:
                 zone4_green.value(jsonmsg['payload']['ZONE4_GREEN'])
     else:
         print ('no existing command received...')
@@ -131,9 +124,9 @@ mqtt = mqtt_connect()
 mqtt.set_callback(mqtt_subscribe)
 mqtt.subscribe(topic_sub)
 print('init motor -> move fwd for 1 sec and move back for 1 sec')
-motor.forward(500)
+motor.forward(config.BOT_SPEED)
 sleep(1)
-motor.backward(500)
+motor.backward(config.BOT_SPEED)
 sleep(1)
 motor.standby()
 motor.run()
